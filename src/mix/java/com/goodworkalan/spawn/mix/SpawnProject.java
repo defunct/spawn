@@ -10,10 +10,11 @@ public class SpawnProject extends ProjectModule {
     public void build(Builder builder) {
         builder
             .cookbook(JavaProject.class)
-                .produces(new Artifact("com.goodworkalan/spawn/0.1"))
+                .produces(new Artifact("com.goodworkalan/spawn/0.1.1"))
                 .main()
                     .depends()
                         .artifact(new Artifact("com.goodworkalan/cassandra/0.7"))
+                        .artifact(new Artifact("com.goodworkalan/reflective/0.1"))
                         .end()
                     .end()
                 .test()

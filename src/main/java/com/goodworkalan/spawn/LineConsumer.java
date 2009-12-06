@@ -4,12 +4,12 @@ public abstract class LineConsumer implements Consumer {
     private final StringBuilder newString = new StringBuilder();
     
     public void consume(byte[] buffer, int offset, int length) {
-        for (int i = offset; offset < length; i++) {
+        for (int i = offset; i < length; i++) {
             if (buffer[i] == '\n') {
                 consume(newString.toString());
                 newString.setLength(0);
             } else {
-                newString.append(buffer[i]);
+                newString.append((char) buffer[i]);
             }
         }
     }
