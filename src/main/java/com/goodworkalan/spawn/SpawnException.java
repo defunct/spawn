@@ -8,6 +8,18 @@ import java.util.ResourceBundle;
  * @author Alan Gutierrez
  */
 public class SpawnException extends RuntimeException {
+    /** Unable to write to redirected output or error stream destination. */
+    public final static int REDIRECT_OUTPUT_FAILURE = 101;
+    
+    /** Unable to execute command line. */
+    public final static int EXECUTE_FAILURE = 102;
+    
+    /** Unable to create output consumer class. */
+    public final static int CONSUMER_CREATE_FAILURE = 103;
+    
+    /** Unable to read from process output or error stream. */
+    public final static int REDIRECT_PROCESS_FAILURE = 104;
+
     /** The serial version id. */
     private static final long serialVersionUID = 1L;
 

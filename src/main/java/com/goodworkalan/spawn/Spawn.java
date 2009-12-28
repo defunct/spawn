@@ -1,5 +1,7 @@
 package com.goodworkalan.spawn;
 
+import static com.goodworkalan.spawn.SpawnException.EXECUTE_FAILURE;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
@@ -96,7 +98,7 @@ public class Spawn<StdOut extends Consumer, StdErr extends Consumer> {
         try {
             process = processBuilder.start();
         } catch (IOException e) {
-            throw new SpawnException(0, e);
+            throw new SpawnException(EXECUTE_FAILURE, e, processBuilder.command());
         }
         Thread out = new Thread(new Consume(process.getInputStream(), stdOut));
         Thread err = new Thread(new Consume(process.getErrorStream(), stdErr));

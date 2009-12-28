@@ -1,5 +1,7 @@
 package com.goodworkalan.spawn;
 
+import static com.goodworkalan.spawn.SpawnException.CONSUMER_CREATE_FAILURE;
+
 import com.goodworkalan.reflective.ReflectiveException;
 import com.goodworkalan.reflective.ReflectiveFactory;
 
@@ -16,7 +18,7 @@ public class ConstructorServer<C extends Consumer> implements ConsumerServer<C> 
         try {
             return reflectiveFactory.getConstructor(consumerClass).newInstance();
         } catch (ReflectiveException e) {
-            throw new SpawnException(0, e);
+            throw new SpawnException(CONSUMER_CREATE_FAILURE, e, consumerClass.getCanonicalName());
         }
     }
 }

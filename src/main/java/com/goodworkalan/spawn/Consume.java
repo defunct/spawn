@@ -1,4 +1,5 @@
 package com.goodworkalan.spawn;
+import static com.goodworkalan.spawn.SpawnException.REDIRECT_PROCESS_FAILURE;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -28,8 +29,12 @@ public class Consume implements Runnable {
             }
         } catch (SpawnException e) {
             caught = e;
-        } catch (IOException e) {
-            caught = new SpawnException(0, e);
+        } catch (IOException ioe) {
+            try {
+                throw new SpawnException(REDIRECT_PROCESS_FAILURE, ioe);
+            } catch (SpawnException e) {
+                caught = e;
+            }
         }
         consumer.close(caught == null);
     }
