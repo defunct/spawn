@@ -58,4 +58,13 @@ public class Exit<StdOut extends Consumer, StdErr extends Consumer> {
     public int getCode() {
         return code;
     }
+
+    /**
+     * Return true of the exit code is 0.
+     * 
+     * @return True if the exit code is 0.
+     */
+    public boolean isSuccess() {
+        return code == 0;
+    }
 }
