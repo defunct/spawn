@@ -14,7 +14,7 @@ public class SpawnTest {
         spawn.setUnexceptionalExitCodes(0);
         spawn.setWorkingDirectory(new File("."));
 
-        Exit<Slurp, Slurp> exit = spawn.execute("cat", "mix.go");
+        Exit<Slurp, Slurp> exit = spawn.execute("cat", "src/test/resources/file.txt");
         for (String line : exit.getStdOut().getLines()) {
             System.out.println(line);
         }
