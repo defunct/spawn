@@ -1,6 +1,7 @@
 package com.goodworkalan.spawn;
 
 import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertTrue;
 
 import java.io.File;
 
@@ -19,6 +20,7 @@ public class SpawnTest {
             System.out.println(line);
         }
 
+        assertTrue(exit.isSuccess());
         assertEquals(exit.getCode(), 0);
     }
 }
