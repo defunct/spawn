@@ -3,31 +3,31 @@ package com.goodworkalan.spawn;
 import static com.goodworkalan.spawn.SpawnException.REDIRECT_OUTPUT_FAILURE;
 
 import java.io.IOException;
-import java.io.OutputStream;
+import java.io.Writer;
 
-public class Redirect implements ByteSink {
-    private final OutputStream out;
+public class WriteChars implements CharSink {
+    private final Writer writer;
     private final boolean close;
-    public Redirect(OutputStream out, boolean close) {
-        this.out = out;
+    public WriteChars(Writer writer, boolean close) {
+        this.writer = writer;
         this.close = close;
+    }
+    
+    public void send(char ch) {
+        try {
+            writer.write(ch);
+        } catch (IOException e) {
+            throw new SpawnException(REDIRECT_OUTPUT_FAILURE, e);
+        }
     }
 
     public void close(boolean failure) {
         if (close) {
             try {
-                out.close();
+                writer.close();
             } catch (IOException e) {
                 throw new SpawnException(REDIRECT_OUTPUT_FAILURE, e);
             }
-        }
-    }
-
-    public void send(byte b) {
-        try {
-            out.write(b);
-        } catch (IOException e) {
-            throw new SpawnException(REDIRECT_OUTPUT_FAILURE, e);
         }
     }
 }

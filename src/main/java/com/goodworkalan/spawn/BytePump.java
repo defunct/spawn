@@ -3,17 +3,18 @@ import static com.goodworkalan.spawn.SpawnException.REDIRECT_PROCESS_FAILURE;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
 
-public class Consume implements Runnable {
+public class BytePump implements Pump {
     private final InputStream in;
 
-    private final Consumer consumer;
+    private final List<ByteSink> sinks;
 
     private SpawnException caught;
 
-    public Consume(InputStream in, Consumer consumer) {
+    public BytePump(InputStream in, List<ByteSink> sinks) {
         this.in = in;
-        this.consumer = consumer;
+        this.sinks = sinks;
     }
 
     public SpawnException getCaught() {
@@ -25,7 +26,12 @@ public class Consume implements Runnable {
         int read;
         try {
             while ((read = in.read(buffer)) != -1) {
-                consumer.consume(buffer, 0, read);
+                for (int i = 0, stop = sinks.size(); i < stop; i++) {
+                    ByteSink sink = sinks.get(i);
+                    for (int j = 0; j < read; j++) {
+                        sink.send(buffer[j]);
+                    }
+                }
             }
         } catch (SpawnException e) {
             caught = e;
@@ -36,6 +42,8 @@ public class Consume implements Runnable {
                 caught = e;
             }
         }
-        consumer.close(caught == null);
+        for (int i = 0, stop = sinks.size(); i < stop; i++) {
+            sinks.get(i).close(caught == null);
+        }
     }
 }

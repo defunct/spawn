@@ -1,7 +1,6 @@
 package com.goodworkalan.spawn;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -43,28 +42,19 @@ public class Spawn {
         return environment;
     }
     
-    public Executor out(Consumer consumer) {
-        List<String> out = new ArrayList<String>();
-        List<String> err = new ArrayList<String>();
-        return new Executor(this, consumer, new Slurp(err), out, err);
+    public Exit $$(String...command) {
+        return $$(Arrays.asList(command));
     }
     
-    public Executor err(Consumer consumer) {
-        List<String> out = new ArrayList<String>();
-        List<String> err = new ArrayList<String>();
-        return new Executor(this, new Slurp(out), consumer, out, err);
+    public Exit $$(List<String> command) {
+        return $(command).run();
     }
     
-    public Executor both(Consumer stdOut, Consumer stdErr) {
-        List<String> out = new ArrayList<String>();
-        List<String> err = new ArrayList<String>();
-        return new Executor(this, stdOut, stdErr, out, err);
+    public Executor $(String...command) {
+        return $(Arrays.asList(command));
     }
     
-    public Exit execute(String...command) {
-        List<String> out = new ArrayList<String>();
-        List<String> err = new ArrayList<String>();
-        Executor executor = new Executor(this, new Slurp(out), new Slurp(err), out, err);
-        return executor.execute(Arrays.asList(command));
+    public Executor $(List<String> command) {
+        return new Executor(null, this, command);
     }
 }

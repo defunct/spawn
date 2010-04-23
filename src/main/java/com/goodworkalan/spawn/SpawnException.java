@@ -1,13 +1,18 @@
 package com.goodworkalan.spawn;
 
 import java.util.ResourceBundle;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
+
+import com.goodworkalan.danger.CodedDanger;
 
 /**
  * An exception raised when errors occur while spawning a child process.
  * 
  * @author Alan Gutierrez
  */
-public class SpawnException extends RuntimeException {
+public class SpawnException extends CodedDanger {
+    private final static ConcurrentMap<String, ResourceBundle> BUNDLES = new ConcurrentHashMap<String, ResourceBundle>();
     /** Unable to write to redirected output or error stream destination. */
     public final static int REDIRECT_OUTPUT_FAILURE = 101;
     
@@ -29,12 +34,6 @@ public class SpawnException extends RuntimeException {
     /** Unable to slurp a file. */
     public static final int SLURP_FAILURE = 102;
 
-    /** The error code. */
-    private final int code;
-
-    /** The detail message format arguments. */
-    private final Object[] arguments;
-
     /**
      * Create a glob exception with the given error code and the given cause.
      * 
@@ -44,30 +43,6 @@ public class SpawnException extends RuntimeException {
      *            The cause.
      */
     public SpawnException(int code, Throwable cause, Object... arguments) {
-        super(null, cause);
-        this.code = code;
-        this.arguments = arguments;
-    }
-
-    /**
-     * Get the error code.
-     * 
-     * @return The error code.
-     */
-    public int getCode() {
-        return code;
-    }
-
-    /**
-     * Returns the detail message string of this error.
-     * 
-     * @return The detail message string of this error.
-     */
-    @Override
-    public String getMessage() {
-        String bundleName = getClass().getPackage().getName() + ".exceptions";
-        ResourceBundle bundle = ResourceBundle.getBundle(bundleName);
-        String format = bundle.getString(Integer.toString(code));
-        return String.format(format, arguments);
+        super(BUNDLES, code, cause, arguments);
     }
 }

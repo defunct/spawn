@@ -1,4 +1,4 @@
-package com.goodworkalan.go.go.mix;
+package com.goodworkalan.spawn.mix;
 
 import com.goodworkalan.go.go.Artifact;
 import com.goodworkalan.mix.ProjectModule;
@@ -14,6 +14,7 @@ public class SpawnProject extends ProjectModule {
                 .main()
                     .depends()
                         .artifact(new Artifact("com.goodworkalan/reflective/0.1"))
+                        .artifact(new Artifact("com.github.bigeasy.danger/danger/0.1"))
                         .end()
                     .end()
                 .test()
