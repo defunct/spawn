@@ -7,7 +7,9 @@ import java.io.Writer;
 
 public class WriteChars implements CharSink {
     private final Writer writer;
+    
     private final boolean close;
+
     public WriteChars(Writer writer, boolean close) {
         this.writer = writer;
         this.close = close;

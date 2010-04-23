@@ -8,7 +8,7 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.nio.charset.Charset;
 
-public class CharPump implements Pump {
+class CharPump implements Pump {
     private final Reader reader;
     
     private final CharSink sink;

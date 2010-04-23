@@ -1,5 +1,5 @@
 package com.goodworkalan.spawn;
 
-public interface Pump extends Runnable {
+interface Pump extends Runnable {
     public SpawnException getCaught();
 }

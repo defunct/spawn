@@ -1,11 +1,12 @@
 package com.goodworkalan.spawn;
+
 import static com.goodworkalan.spawn.SpawnException.REDIRECT_PROCESS_FAILURE;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
-public class BytePump implements Pump {
+class BytePump implements Pump {
     private final InputStream in;
 
     private final List<ByteSink> sinks;

@@ -5,7 +5,7 @@ import java.io.OutputStream;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
 
-public class MissingProcess extends OutputStream {
+class MissingProcess extends OutputStream {
     private final PipedInputStream in;
     private final PipedOutputStream out;
     

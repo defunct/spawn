@@ -2,7 +2,7 @@ package com.goodworkalan.spawn;
 
 import java.util.List;
 
-public class MultiplexedCharSink implements CharSink {
+class MultiplexedCharSink implements CharSink {
     private final CharSink[] sinks;
 
     public MultiplexedCharSink(List<CharSink> sinks) {

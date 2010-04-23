@@ -31,7 +31,7 @@ public class Executor {
     
     private boolean tee;
 
-    public Executor(Executor previous, Spawn spawn, List<String> command) {
+    Executor(Executor previous, Spawn spawn, List<String> command) {
         this.previous = previous;
         this.spawn = spawn;
         this.command = command;
