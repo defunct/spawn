@@ -1,5 +1,7 @@
 package com.goodworkalan.spawn;
 
+import java.util.List;
+
 /**
  * The outcome of the execution of command by {@link Spawn}. This is an
  * immutable data structure that collects the standard output, error output and
@@ -7,13 +9,15 @@ package com.goodworkalan.spawn;
  * 
  * @author Alan Gutierrez
  */
-public class Exit<StdOut extends Consumer, StdErr extends Consumer> {
+public class Exit {
     /** The standard output. */
-    private final StdOut stdOut;
+    public final List<String> out;
+
     /** The error output. */
-    private final StdErr stdErr;
+    public final List<String> err;
+
     /** The exit code. */
-    private final int code;
+    public final int code;
 
     /**
      * Create an exit structure with the given standard output, error output and
@@ -26,37 +30,10 @@ public class Exit<StdOut extends Consumer, StdErr extends Consumer> {
      * @param code
      *            The exit code.
      */
-    public Exit(StdOut stdOut, StdErr stdErr, int code) {
-        this.stdOut = stdOut;
-        this.stdErr = stdErr;
+    public Exit(List<String> out, List<String> err, int code) {
+        this.out = out;
+        this.err = err;
         this.code = code;
-    }
-
-    /**
-     * Get the standard output.
-     * 
-     * @return The standard output.
-     */
-    public StdOut getStdOut() {
-        return stdOut;
-    }
-
-    /**
-     * Get the error output.
-     * 
-     * @return The error output.
-     */
-    public StdErr getStdErr() {
-        return stdErr;
-    }
-
-    /**
-     * Get the exit code.
-     * 
-     * @return The exit code.
-     */
-    public int getCode() {
-        return code;
     }
 
     /**

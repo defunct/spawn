@@ -1,9 +1,7 @@
 package com.goodworkalan.spawn;
 
-import static com.goodworkalan.spawn.SpawnException.EXECUTE_FAILURE;
-
 import java.io.File;
-import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -11,11 +9,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-public class Spawn<StdOut extends Consumer, StdErr extends Consumer> {
-    private final ConsumerServer<StdOut> stdOutServer;
-    
-    private final ConsumerServer<StdErr> stdErrServer;
-    
+public class Spawn {
     private final Map<String, String> environment = new HashMap<String, String>();
     
     private boolean redirectErrorStream;
@@ -23,38 +17,6 @@ public class Spawn<StdOut extends Consumer, StdErr extends Consumer> {
     private final Set<Integer> unexceptionalExitCodes = new HashSet<Integer>();
     
     private File workingDirectory;
-    
-    public static <O extends Consumer, E extends Consumer> Spawn<O, E> spawn(O stdOut, E stdErr) {
-        return new Spawn<O, E>(stdOut, stdErr);
-    }
-    
-    public static <O extends Consumer> Spawn<O, Slurp> spawn(O stdOut) {
-        return new Spawn<O, Slurp>(stdOut, Slurp.class);
-    }
-    
-    public static Spawn<Slurp, Slurp> spawn() {
-        return new Spawn<Slurp, Slurp>(Slurp.class, Slurp.class);
-    }
-    
-    public Spawn(StdOut stdOut, StdErr stdErr) {
-        this.stdOutServer = new InstanceServer<StdOut>(stdOut);
-        this.stdErrServer = new InstanceServer<StdErr>(stdErr);
-    }
-    
-    public Spawn(Class<StdOut> stdOut, StdErr stdErr) {
-        this.stdOutServer = new ConstructorServer<StdOut>(stdOut);
-        this.stdErrServer = new InstanceServer<StdErr>(stdErr);
-    }
-    
-    public Spawn(StdOut stdOut, Class<StdErr> stdErr) {
-        this.stdOutServer = new InstanceServer<StdOut>(stdOut);
-        this.stdErrServer = new ConstructorServer<StdErr>(stdErr);
-    }
-    
-    public Spawn(Class<StdOut> stdOut, Class<StdErr> stdErr) {
-        this.stdOutServer = new ConstructorServer<StdOut>(stdOut);
-        this.stdErrServer = new ConstructorServer<StdErr>(stdErr);
-    }
     
     public void setUnexceptionalExitCodes(Integer...codes) {
         unexceptionalExitCodes.clear();
@@ -81,45 +43,28 @@ public class Spawn<StdOut extends Consumer, StdErr extends Consumer> {
         return environment;
     }
     
-    public Exit<StdOut, StdErr> execute(String...command) {
-        return execute(Arrays.asList(command));
+    public Executor out(Consumer consumer) {
+        List<String> out = new ArrayList<String>();
+        List<String> err = new ArrayList<String>();
+        return new Executor(this, consumer, new Slurp(err), out, err);
     }
-
-    public Exit<StdOut, StdErr> execute(List<String> command) {
-        ProcessBuilder processBuilder = new ProcessBuilder(command);
-        
-        processBuilder.directory(getWorkingDirectory());
-        processBuilder.environment().putAll(getEnvironment());
-        processBuilder.redirectErrorStream(isRedirectErrorStream());
-        
-        StdOut stdOut = stdOutServer.getConsumer();
-        StdErr stdErr = stdErrServer.getConsumer();
-        Process process;
-        try {
-            process = processBuilder.start();
-        } catch (IOException e) {
-            throw new SpawnException(EXECUTE_FAILURE, e, processBuilder.command());
-        }
-        Thread out = new Thread(new Consume(process.getInputStream(), stdOut));
-        Thread err = new Thread(new Consume(process.getErrorStream(), stdErr));
-        out.start();
-        err.start();
-        int result;
-        try {
-            result = process.waitFor();
-        } catch (InterruptedException e) {
-            throw new SpawnException(0, e);
-        }
-        try {
-            err.join();
-        } catch (InterruptedException e) {
-            throw new SpawnException(0, e);
-        }
-        try {
-            out.join();
-        } catch (InterruptedException e) {
-            throw new SpawnException(0, e);
-        }
-        return new Exit<StdOut, StdErr>(stdOut, stdErr, result);
+    
+    public Executor err(Consumer consumer) {
+        List<String> out = new ArrayList<String>();
+        List<String> err = new ArrayList<String>();
+        return new Executor(this, new Slurp(out), consumer, out, err);
+    }
+    
+    public Executor both(Consumer stdOut, Consumer stdErr) {
+        List<String> out = new ArrayList<String>();
+        List<String> err = new ArrayList<String>();
+        return new Executor(this, stdOut, stdErr, out, err);
+    }
+    
+    public Exit execute(String...command) {
+        List<String> out = new ArrayList<String>();
+        List<String> err = new ArrayList<String>();
+        Executor executor = new Executor(this, new Slurp(out), new Slurp(err), out, err);
+        return executor.execute(Arrays.asList(command));
     }
 }

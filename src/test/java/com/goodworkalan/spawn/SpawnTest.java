@@ -10,17 +10,30 @@ import org.testng.annotations.Test;
 public class SpawnTest {
     @Test
     public void cat() {
-        Spawn<Slurp, Slurp> spawn = Spawn.spawn();
+        Spawn spawn = new Spawn();
 
-        spawn.setUnexceptionalExitCodes(0);
         spawn.setWorkingDirectory(new File("."));
 
-        Exit<Slurp, Slurp> exit = spawn.execute("cat", "src/test/resources/file.txt");
-        for (String line : exit.getStdOut().getLines()) {
+        Exit exit = spawn.execute("cat", "src/test/resources/file.txt");
+        assertTrue(exit.isSuccess());
+        assertEquals(exit.code, 0);
+        for (String line : exit.out) {
             System.out.println(line);
         }
 
-        assertTrue(exit.isSuccess());
-        assertEquals(exit.getCode(), 0);
+        spawn.setUnexceptionalExitCodes(0);
+        try {
+            for (String line :  spawn.execute("cat", "src/test/resources/file.txt").out) {
+                System.out.println(line);
+            }
+        } catch (SpawnException e) {
+            System.out.println(e.getCode());
+        }
+
+        exit = spawn.out(new LineConsumer() {
+            protected void consume(String line) {
+                System.out.println(line);
+            }
+        }).execute("cat", "src/test/resources/file.txt");
     }
 }
