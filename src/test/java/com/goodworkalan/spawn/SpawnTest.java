@@ -8,7 +8,6 @@ import java.io.File;
 import org.testng.annotations.Test;
 
 public class SpawnTest {
-    @Test
     public void cat() {
         Spawn spawn = new Spawn();
 

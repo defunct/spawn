@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+// FIXME Document.
 public class Spawn {
     private final Map<String, String> environment = new HashMap<String, String>();
     
@@ -50,6 +51,7 @@ public class Spawn {
         return $(command).run();
     }
     
+    // TODO Maybe a $(InputStream) that can pump bytes to a utility?
     public Executor $(String...command) {
         return $(Arrays.asList(command));
     }
