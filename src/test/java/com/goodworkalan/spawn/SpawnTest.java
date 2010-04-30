@@ -11,6 +11,18 @@ public class SpawnTest {
     @Test
     public void nothing() {
     }
+    
+    @Test
+    public void invoke() {
+        Spawn spawn = new Spawn();
+
+        spawn.setWorkingDirectory(new File("."));
+
+        Exit exit = spawn.$$("cat", "src/test/resources/file.txt");
+        assertTrue(exit.isSuccess());
+        assertEquals(exit.code, 0);
+        assertEquals(exit.out.get(0), "Hello, World!");
+    }
 
     public void cat() {
         Spawn spawn = new Spawn();
