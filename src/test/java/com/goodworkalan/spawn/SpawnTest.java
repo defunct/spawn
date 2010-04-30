@@ -24,6 +24,7 @@ public class SpawnTest {
         assertEquals(exit.out.get(0), "Hello, World!");
     }
 
+    @Test
     public void cat() {
         Spawn spawn = new Spawn();
 
