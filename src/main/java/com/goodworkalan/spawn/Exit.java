@@ -30,7 +30,7 @@ public class Exit {
      * @param code
      *            The exit code.
      */
-    public Exit(List<String> out, List<String> err, int code) {
+    Exit(List<String> out, List<String> err, int code) {
         this.out = out;
         this.err = err;
         this.code = code;
