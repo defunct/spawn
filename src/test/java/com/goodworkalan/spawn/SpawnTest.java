@@ -3,6 +3,7 @@ package com.goodworkalan.spawn;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
 
 import org.testng.annotations.Test;
@@ -65,5 +66,13 @@ public class SpawnTest {
         spawn.$().run();
         
         spawn.$("cat", "src/test/resources/file.txt").$().run();
+        
+    }
+    
+    @Test
+    public void pseudoCat() {
+        Spawn spawn = new Spawn();
+        spawn.setWorkingDirectory(new File("."));
+        assertEquals(spawn.$(new ByteArrayInputStream("a".getBytes())).$("cat").run().out.get(0), "a");
     }
 }

@@ -1,6 +1,7 @@
 package com.goodworkalan.spawn;
 
 import java.io.File;
+import java.io.InputStream;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -43,6 +44,10 @@ public class Spawn {
         return environment;
     }
     
+    public Executor $(InputStream in) {
+        return new Executor(null, this, new Cat(in));
+    }
+    
     public Exit $$(String...command) {
         return $$(Arrays.asList(command));
     }
@@ -51,12 +56,16 @@ public class Spawn {
         return $(command).run();
     }
     
+    public Executor $() {
+        return new Executor(null, this, new MissingProcess());   
+    }
+    
     // TODO Maybe a $(InputStream) that can pump bytes to a utility?
     public Executor $(String...command) {
         return $(Arrays.asList(command));
     }
     
     public Executor $(List<String> command) {
-        return new Executor(null, this, command);
+        return new Executor(null, this, new Executable(command));
     }
 }

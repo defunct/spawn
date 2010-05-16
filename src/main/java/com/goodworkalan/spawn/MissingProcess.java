@@ -1,11 +1,12 @@
 package com.goodworkalan.spawn;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
 
-class MissingProcess extends OutputStream {
+class MissingProcess extends AbstractProgram {
     private final PipedInputStream in;
     private final PipedOutputStream out;
     
@@ -18,17 +19,11 @@ class MissingProcess extends OutputStream {
         }
     }
     
-    public PipedInputStream getInputStream() {
+    public InputStream getInputStream() {
         return in;
     }
     
-    @Override
-    public void write(int b) throws IOException {
-        out.write(b);
-    }
-    
-    @Override
-    public void close() throws IOException {
-        out.close();
+    public OutputStream getOutputStream() {
+        return out;
     }
 }

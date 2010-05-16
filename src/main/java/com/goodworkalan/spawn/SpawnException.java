@@ -24,6 +24,9 @@ public class SpawnException extends CodedDanger {
     
     /** Unable to read from process output or error stream. */
     public final static int REDIRECT_PROCESS_FAILURE = 104;
+    
+    /** Unable to close the first input stream. */
+    public final static int CLOSE_INPUT_FAILURE = 105;
 
     /** The serial version id. */
     private static final long serialVersionUID = 1L;

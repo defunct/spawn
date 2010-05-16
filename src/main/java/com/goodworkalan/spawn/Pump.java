@@ -1,5 +1,8 @@
 package com.goodworkalan.spawn;
 
-interface Pump extends Runnable {
-    public SpawnException getCaught();
+import java.io.IOException;
+import java.io.OutputStream;
+
+public interface Pump {
+    public void input(OutputStream out) throws IOException;
 }

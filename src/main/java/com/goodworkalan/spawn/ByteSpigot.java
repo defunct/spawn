@@ -6,14 +6,14 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
-class BytePump implements Pump {
+class ByteSpigot implements Spigot {
     private final InputStream in;
 
     private final List<ByteSink> sinks;
 
     private SpawnException caught;
 
-    public BytePump(InputStream in, List<ByteSink> sinks) {
+    public ByteSpigot(InputStream in, List<ByteSink> sinks) {
         this.in = in;
         this.sinks = sinks;
     }
@@ -44,7 +44,7 @@ class BytePump implements Pump {
             }
         }
         for (int i = 0, stop = sinks.size(); i < stop; i++) {
-            sinks.get(i).close(caught == null);
+            sinks.get(i).close(caught != null);
         }
     }
 }

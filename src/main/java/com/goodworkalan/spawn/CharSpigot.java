@@ -8,14 +8,14 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.nio.charset.Charset;
 
-class CharPump implements Pump {
+class CharSpigot implements Spigot {
     private final Reader reader;
     
     private final CharSink sink;
 
     private SpawnException caught;
 
-    public CharPump(InputStream in, Charset encoding, CharSink sink) {
+    public CharSpigot(InputStream in, Charset encoding, CharSink sink) {
         this.reader = new InputStreamReader(in, encoding);
         this.sink = sink;
     }
@@ -42,6 +42,6 @@ class CharPump implements Pump {
                 caught = e;
             }
         }
-        sink.close(caught == null);
+        sink.close(caught != null);
     }
 }
