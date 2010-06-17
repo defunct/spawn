@@ -1,9 +1,5 @@
 package com.goodworkalan.spawn;
 
-import java.util.ResourceBundle;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
-
 import com.goodworkalan.danger.CodedDanger;
 
 /**
@@ -12,7 +8,6 @@ import com.goodworkalan.danger.CodedDanger;
  * @author Alan Gutierrez
  */
 public class SpawnException extends CodedDanger {
-    private final static ConcurrentMap<String, ResourceBundle> BUNDLES = new ConcurrentHashMap<String, ResourceBundle>();
     /** Unable to write to redirected output or error stream destination. */
     public final static int REDIRECT_OUTPUT_FAILURE = 101;
     
@@ -46,6 +41,6 @@ public class SpawnException extends CodedDanger {
      *            The cause.
      */
     public SpawnException(int code, Throwable cause, Object... arguments) {
-        super(BUNDLES, code, cause, arguments);
+        super(code, cause, arguments);
     }
 }
