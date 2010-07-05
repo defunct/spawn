@@ -6,10 +6,14 @@ import java.io.OutputStream;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
 
+// TODO Document.
 class MissingProcess extends AbstractProgram {
+    // TODO Document.
     private final PipedInputStream in;
+    // TODO Document.
     private final PipedOutputStream out;
     
+    // TODO Document.
     public MissingProcess() {
         try {
             this.in = new PipedInputStream();
@@ -19,10 +23,12 @@ class MissingProcess extends AbstractProgram {
         }
     }
     
+    // TODO Document.
     public InputStream getInputStream() {
         return in;
     }
     
+    // TODO Document.
     public OutputStream getOutputStream() {
         return out;
     }

@@ -19,9 +19,8 @@ public class SpawnProject implements ProjectModule {
     public void build(Builder builder) {
         builder
             .cookbook(JavaProject.class)
-                .produces("com.github.bigeasy.spawn/spawn/0.1.1.4")
+                .produces("com.github.bigeasy.spawn/spawn/0.1.1.5")
                 .depends()
-                    .production("com.github.bigeasy.reflective/reflective/0.+1")
                     .production("com.github.bigeasy.danger/danger/0.+1")
                     .development("org.testng/testng-jdk15/5.10")
                     .development("org.mockito/mockito-core/1.6")

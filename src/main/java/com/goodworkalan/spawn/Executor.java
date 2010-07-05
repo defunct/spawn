@@ -11,39 +11,53 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
+// TODO Document.
 public class Executor {
+    // TODO Document.
     private final Executor previous;
     
+    // TODO Document.
     private final Spawn spawn;
     
+    // TODO Document.
     private final Program program;
     
+    // TODO Document.
     private final List<Pipe> pipes = new ArrayList<Pipe>();
     
+    // TODO Document.
     private final List<ByteSink> outBytes = new ArrayList<ByteSink>();
     
+    // TODO Document.
     private final List<CharSink> outChars = new ArrayList<CharSink>();
     
+    // TODO Document.
     private final List<ByteSink> errBytes = new ArrayList<ByteSink>();
     
+    // TODO Document.
     private final List<CharSink> errChars = new ArrayList<CharSink>();
     
+    // TODO Document.
     private boolean tee;
 
+    // TODO Document.
     Executor(Executor previous, Spawn spawn, Program program) {
         this.previous = previous;
         this.spawn = spawn;
         this.program = program;
     }
     
+    // TODO Document.
     public Executor $(List<String> command) {
         return new Executor(this, spawn, new Executable(command));
     }
     
+    // TODO Document.
     public Executor $() {
         return new Executor(this, spawn, new MissingProcess());
     }
 
+    // TODO Document.
     public Executor $(String... command) {
         return $(Arrays.asList(command));
     }
@@ -53,52 +67,62 @@ public class Executor {
         return out(new Redirect(out, false));
     }
     
+    // TODO Document.
     public Executor tee() {
         tee = true;
         return this;
     }
     
+    // TODO Document.
     public Executor err(OutputStream err) {
         return err(new Redirect(err, false));
     }
     
+    // TODO Document.
     public Executor out(Pipe pipe) {
         pipes.add(pipe);
         return this;
     }
 
+    // TODO Document.
     public Executor out(ByteSink sink) {
         outBytes.add(sink);
         return this;
     }
     
+    // TODO Document.
     public Executor out(CharSink sink) {
         outChars.add(sink);
         return this;
     }
     
+    // TODO Document.
     public Executor err(ByteSink sink) {
         errBytes.add(sink);
         return this;
     }
     
+    // TODO Document.
     public Executor err(CharSink chars) {
         errChars.add(chars);
         return this;
     }
     
+    // TODO Document.
     public Exit run() {
         LinkedList<Exit> exits = new LinkedList<Exit>();
         execute(null, exits);
         return exits.getLast();
     }
     
+    // TODO Document.
     public Exit[] pipe() {
         List<Exit> exits = new ArrayList<Exit>();
         execute(null, exits);
         return exits.toArray(new Exit[exits.size()]); 
     }
     
+    // TODO Document.
     void execute(OutputStream next, final List<Exit> exit) {
         program.run(spawn);
         
@@ -190,6 +214,7 @@ public class Executor {
         });
     }
     
+    // TODO Document.
     void interruptable(Interruptable interruptable) {
         try {
             interruptable.run();

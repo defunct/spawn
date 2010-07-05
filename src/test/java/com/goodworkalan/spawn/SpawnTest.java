@@ -8,11 +8,14 @@ import java.io.File;
 
 import org.testng.annotations.Test;
 
+// TODO Document.
 public class SpawnTest {
+    // TODO Document.
     @Test
     public void nothing() {
     }
     
+    // TODO Document.
     @Test
     public void invoke() {
         Spawn spawn = new Spawn();
@@ -25,6 +28,7 @@ public class SpawnTest {
         assertEquals(exit.out.get(0), "Hello, World!");
     }
 
+    // TODO Document.
     @Test
     public void cat() {
         Spawn spawn = new Spawn();
@@ -69,6 +73,7 @@ public class SpawnTest {
         
     }
     
+    // TODO Document.
     @Test
     public void pseudoCat() {
         Spawn spawn = new Spawn();

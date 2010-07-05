@@ -8,22 +8,29 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.nio.charset.Charset;
 
+// TODO Document.
 class CharSpigot implements Spigot {
+    // TODO Document.
     private final Reader reader;
     
+    // TODO Document.
     private final CharSink sink;
 
+    // TODO Document.
     private SpawnException caught;
 
+    // TODO Document.
     public CharSpigot(InputStream in, Charset encoding, CharSink sink) {
         this.reader = new InputStreamReader(in, encoding);
         this.sink = sink;
     }
     
+    // TODO Document.
     public SpawnException getCaught() {
         return caught;
     }
     
+    // TODO Document.
     public void run() {
         char[] buffer = new char[4098];
         int read;
