@@ -22,7 +22,6 @@ public class SpawnProject implements ProjectModule {
                 .produces("com.github.bigeasy.spawn/spawn/0.1.1.5")
                 .depends()
                     .development("org.testng/testng-jdk15/5.10")
-                    //.development("org.mockito/mockito-core/1.6")
                     .end()
                 .end()
             .end();
