@@ -6,29 +6,51 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
-// TODO Document.
+/**
+ * Reads bytes from an <code>InputStream</code> and feeds them to a each
+ * of a list of 
+ * <code>ByteSink</code> instances.
+ * 
+ * @author Alan Gutierrez
+ */
 class BytePump implements Pump {
-    // TODO Document.
+    /** The input stream. */
     private final InputStream in;
 
-    // TODO Document.
+    /** The list of byte sinks. */
     private final List<ByteSink> sinks;
 
-    // TODO Document.
+    /** The exception that terminated the pump, if any. */
     private SpawnException caught;
 
-    // TODO Document.
+    /**
+     * Create a byte pump that reads an input stream and writes the bytes
+     * read to each in a list of byte sinks.
+     * 
+     * @param in
+     *            The input stream.
+     * @param sinks
+     *            The list of byte sinks.
+     */
     public BytePump(InputStream in, List<ByteSink> sinks) {
         this.in = in;
         this.sinks = sinks;
     }
 
-    // TODO Document.
+    /**
+     * Get the exception caught during execution that terminated the pump, or
+     * null if the pump terminated normally.
+     * 
+     * @return The terminal exception.
+     */
     public SpawnException getCaught() {
         return caught;
     }
 
-    // TODO Document.
+    /**
+     * Read the input stream and write the bytes to each in the list of byte
+     * sinks.
+     */
     public void run() {
         byte[] buffer = new byte[4098];
         int read;
