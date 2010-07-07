@@ -19,7 +19,7 @@ public class SpawnProject implements ProjectModule {
     public void build(Builder builder) {
         builder
             .cookbook(JavaProject.class)
-                .produces("com.github.bigeasy.spawn/spawn/0.1.1.5")
+                .produces("com.github.bigeasy.spawn/spawn/0.1.1.6")
                 .depends()
                     .development("org.testng/testng-jdk15/5.10")
                     .end()

@@ -2,17 +2,31 @@ package com.goodworkalan.spawn;
 
 import java.io.InputStream;
 
-// TODO Document.
+/**
+ * A pseudo-program that returns a specific in-process input stream to initiate
+ * a pipeline.
+ * 
+ * @author Alan Gutierrez
+ */
 public class Cat extends AbstractProgram {
-    // TODO Document.
+    /** The input stream. */
     private final InputStream inputStream;
 
-    // TODO Document.
+    /**
+     * Create a cat program.
+     * 
+     * @param inputStream
+     *            The input stream.
+     */
     public Cat(InputStream inputStream) {
         this.inputStream = inputStream;
     }
     
-    // TODO Document.
+    /**
+     * Get input stream.
+     * 
+     * @return The input stream.
+     */
     public InputStream getInputStream() {
         return inputStream;
     }

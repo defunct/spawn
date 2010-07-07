@@ -1,19 +1,37 @@
 package com.goodworkalan.spawn;
 
-import java.io.IOException;
 import java.io.OutputStream;
 
-// TODO Document.
+/**
+ * An output stream that does noting.
+ *
+ * @author Alan Gutierrez
+ */
 public class NullOutputStream extends OutputStream {
-    // TODO Document.
+    /** The singleton instance. */
     public final static OutputStream INSTANCE = new NullOutputStream();
-    // TODO Document.
+
+    /**
+     * Does nothing.
+     * 
+     * @param b
+     *            The byte to write.
+     */
     @Override
-    public void write(int b) throws IOException {
+    public void write(int b) {
     }
-    
-    // TODO Document.
+
+    /**
+     * Does nothing.
+     * 
+     * @param b
+     *            The byte buffer.
+     * @param off
+     *            The offset of the range in the buffer to write.
+     * @param len
+     *            The length of the range in the buffer to write.
+     */
     @Override
-    public void write(byte[] b, int off, int len) throws IOException {
+    public void write(byte[] b, int off, int len) {
     }
 }

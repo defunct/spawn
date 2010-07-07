@@ -1,7 +1,17 @@
 package com.goodworkalan.spawn;
 
-// TODO Document.
+/**
+ * Output for a program in a pipeline. Descendants define methods specific to
+ * byte, character or line output.
+ * 
+ * @author Alan Gutierrez
+ */
 public interface Sink {
-    // TODO Document.
+    /**
+     * Close the sink releasing any system resources.
+     * 
+     * @param failure
+     *            Whether the sink is being closed after a write failure.
+     */
     public void close(boolean failure);
 }

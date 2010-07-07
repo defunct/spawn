@@ -1,28 +1,51 @@
 package com.goodworkalan.spawn;
 
-// TODO Document.
+/**
+ * A character sink that groups characters into lines. Derived classes define
+ * the line by line processing by implementeing the
+ * {@link #send(String, String) send} method.
+ * 
+ * @author Alan Gutierrez
+ */
 public abstract class LineSink implements CharSink {
-    // TODO Document.
-    private final StringBuilder newString = new StringBuilder();
-    
-    // TODO Document.
+    /** The line buffer. */
+    private final StringBuilder line = new StringBuilder();
+
+    /**
+     * Consume a character of program output.
+     * 
+     * @param ch
+     *            The character.
+     */
     public void send(char ch) {
         if (ch == '\n') {
-            send(newString.toString(), "\n");
-            newString.setLength(0);
+            send(line.toString(), "\n");
+            line.setLength(0);
         } else {
-            newString.append(ch);
+            line.append(ch);
         }
     }
     
-    // TODO Document.
+    /**
+     * Close the sink by flushing the last line if any.
+     * 
+     * @param failure
+     *            Whether the sink is being closed after a write failure.
+     */
     public void close(boolean failure) {
-        if (!failure && newString.length() != 0) {
-            send(newString.toString(), "");
-            newString.setLength(0);
+        if (!failure && line.length() != 0) {
+            send(line.toString(), "");
+            line.setLength(0);
         }
     }
-    
-    // TODO Document.
+
+    /**
+     * Consume a line of program output.
+     * 
+     * @param line
+     *            The line.
+     * @param ending
+     *            The line ending.
+     */
     public abstract void send(String line, String ending);
 }
