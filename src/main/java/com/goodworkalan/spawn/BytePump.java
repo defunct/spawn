@@ -7,7 +7,7 @@ import java.io.InputStream;
 import java.util.List;
 
 // TODO Document.
-class ByteSpigot implements Spigot {
+class BytePump implements Pump {
     // TODO Document.
     private final InputStream in;
 
@@ -18,7 +18,7 @@ class ByteSpigot implements Spigot {
     private SpawnException caught;
 
     // TODO Document.
-    public ByteSpigot(InputStream in, List<ByteSink> sinks) {
+    public BytePump(InputStream in, List<ByteSink> sinks) {
         this.in = in;
         this.sinks = sinks;
     }

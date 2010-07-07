@@ -5,7 +5,7 @@ package com.goodworkalan.spawn;
  * 
  * @author Alan Gutierrez
  */
-interface Spigot extends Runnable {
+interface Pump extends Runnable {
     /**
      * Get the exception caught during execution that terminated the pump, or
      * null if the pump terminated normally.

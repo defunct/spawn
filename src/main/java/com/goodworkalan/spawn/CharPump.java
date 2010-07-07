@@ -9,7 +9,7 @@ import java.io.Reader;
 import java.nio.charset.Charset;
 
 // TODO Document.
-class CharSpigot implements Spigot {
+class CharPump implements Pump {
     // TODO Document.
     private final Reader reader;
     
@@ -20,7 +20,7 @@ class CharSpigot implements Spigot {
     private SpawnException caught;
 
     // TODO Document.
-    public CharSpigot(InputStream in, Charset encoding, CharSink sink) {
+    public CharPump(InputStream in, Charset encoding, CharSink sink) {
         this.reader = new InputStreamReader(in, encoding);
         this.sink = sink;
     }

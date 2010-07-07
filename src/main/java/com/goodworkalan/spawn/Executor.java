@@ -145,7 +145,7 @@ public class Executor {
             }
             if (!outBytes.isEmpty()) {
                 MissingProcess missing = new MissingProcess();
-                threads.add(new Thread(new ByteSpigot(missing.getInputStream(), outBytes)));
+                threads.add(new Thread(new BytePump(missing.getInputStream(), outBytes)));
                 outChars.add(new WriteChars(new OutputStreamWriter(missing.getOutputStream(), cs), true));
             }
             CharSink head = null;
@@ -156,18 +156,18 @@ public class Executor {
             } else {
                 head = tail;
             }
-            threads.add(new Thread(new CharSpigot(program.getInputStream(), cs, head)));
+            threads.add(new Thread(new CharPump(program.getInputStream(), cs, head)));
         } else {
             if (!outChars.isEmpty()) {
                 CharSink head = outChars.size() == 1 ? outChars.get(0) : new MultiplexedCharSink(outChars);
                 MissingProcess missing = new MissingProcess();
-                threads.add(new Thread(new CharSpigot(missing.getInputStream(), cs, head)));
+                threads.add(new Thread(new CharPump(missing.getInputStream(), cs, head)));
                 outBytes.add(new Redirect(missing.getOutputStream(), true));
             }
             if (next != null) {
                 outBytes.add(new Redirect(next, true));
             }
-            threads.add(new Thread(new ByteSpigot(program.getInputStream(), outBytes)));
+            threads.add(new Thread(new BytePump(program.getInputStream(), outBytes)));
         }
         
         final List<String> errLines = new ArrayList<String>();
@@ -178,15 +178,15 @@ public class Executor {
 
         if (errBytes.isEmpty()) {
             CharSink head = errChars.size() == 1 ? errChars.get(0) : new MultiplexedCharSink(errChars);
-            threads.add(new Thread(new CharSpigot(program.getErrorStream(), cs, head)));
+            threads.add(new Thread(new CharPump(program.getErrorStream(), cs, head)));
         } else {
             if (!errChars.isEmpty()) {
                 CharSink head = outChars.size() == 1 ? outChars.get(0) : new MultiplexedCharSink(outChars);
                 MissingProcess missing = new MissingProcess();
-                threads.add(new Thread(new CharSpigot(missing.getInputStream(), cs, head)));
+                threads.add(new Thread(new CharPump(missing.getInputStream(), cs, head)));
                 errBytes.add(new Redirect(missing.getOutputStream(), true));
             }
-            threads.add(new Thread(new ByteSpigot(program.getErrorStream(), outBytes)));
+            threads.add(new Thread(new BytePump(program.getErrorStream(), outBytes)));
         }
         
         for (Thread thread : threads) {
