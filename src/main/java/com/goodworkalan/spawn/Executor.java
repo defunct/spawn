@@ -130,8 +130,8 @@ public class Executor {
     /**
      * Redirect the error output to the output stream.
      * 
-     * @param out
-     *            The output stream.
+     * @param err
+     *            The error output stream.
      * @return This executor to continue building the pipeline.
      */
     public Executor err(OutputStream err) {
@@ -208,8 +208,8 @@ public class Executor {
      *            The character sink.
      * @return This executor to continue building the pipeline.
      */
-    public Executor err(CharSink chars) {
-        errChars.add(chars);
+    public Executor err(CharSink sink) {
+        errChars.add(sink);
         return this;
     }
     

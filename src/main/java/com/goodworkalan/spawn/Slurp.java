@@ -26,7 +26,7 @@ public class Slurp extends LineSink {
      * 
      * @param line
      *            The line.
-     * @param line
+     * @param ending
      *            The line ending.
      */
     public void send(String line, String ending) {

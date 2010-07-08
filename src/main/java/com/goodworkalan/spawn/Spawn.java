@@ -36,7 +36,7 @@ public class Spawn {
      * indicates that no exit code will raise an exception. This method is not
      * additive, each time it is called the set is reset.
      * 
-     * @param code
+     * @param codes
      *            The set of normal exist codes.
      */
     public void setUnexceptionalExitCodes(Integer...codes) {
