@@ -1,7 +1,16 @@
 package com.goodworkalan.spawn;
 
-// TODO Document.
+/**
+ * Consume the output a program a byte at a time.
+ *
+ * @author Alan Gutierrez
+ */
 public interface ByteSink extends Sink {
-    // TODO Document.
+    /**
+     * Consume a single byte of output.
+     * 
+     * @param b
+     *            The byte.
+     */
     public void send(byte b);
 }

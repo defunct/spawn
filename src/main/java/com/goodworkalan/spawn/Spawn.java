@@ -126,7 +126,11 @@ public class Spawn {
         return $(command).run();
     }
 
-    // TODO Document.
+    /**
+     * Create an executor around a do nothing process.
+     * 
+     * @return An executor.
+     */
     public Executor $() {
         return new Executor(null, this, new MissingProcess());   
     }

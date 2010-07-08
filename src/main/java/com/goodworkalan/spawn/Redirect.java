@@ -5,19 +5,52 @@ import static com.goodworkalan.spawn.SpawnException.REDIRECT_OUTPUT_FAILURE;
 import java.io.IOException;
 import java.io.OutputStream;
 
-// TODO Document.
+/**
+ * Redirects the output of a program to an output stream.
+ *
+ * @author Alan Gutierrez
+ */
 public class Redirect implements ByteSink {
-    // TODO Document.
+    /** The output stream. */
     private final OutputStream out;
-    // TODO Document.
+    
+    /** Whether to close the output stream when the byte sink closes. */
     private final boolean close;
-    // TODO Document.
+
+    /**
+     * Create a new redirect.
+     * 
+     * @param out
+     *            The output stream.
+     * @param close
+     *            Whether to close the output stream when the byte sink closes.
+     */
     public Redirect(OutputStream out, boolean close) {
         this.out = out;
         this.close = close;
     }
 
-    // TODO Document.
+    /**
+     * Write the byte to the output stream.
+     * 
+     * @param b
+     *            The byte.
+     */
+    public void send(byte b) {
+        try {
+            out.write(b);
+        } catch (IOException e) {
+            throw new SpawnException(REDIRECT_OUTPUT_FAILURE, e);
+        }
+    }
+
+    /**
+     * Close the output stream if close output stream with sink was indicated at
+     * construction.
+     * 
+     * @param failure
+     *            Whether the sink is being closed after a write failure.
+     */
     public void close(boolean failure) {
         if (close) {
             try {
@@ -25,15 +58,6 @@ public class Redirect implements ByteSink {
             } catch (IOException e) {
                 throw new SpawnException(REDIRECT_OUTPUT_FAILURE, e);
             }
-        }
-    }
-
-    // TODO Document.
-    public void send(byte b) {
-        try {
-            out.write(b);
-        } catch (IOException e) {
-            throw new SpawnException(REDIRECT_OUTPUT_FAILURE, e);
         }
     }
 }

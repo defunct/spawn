@@ -1,5 +1,6 @@
 package com.goodworkalan.spawn;
 
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -10,6 +11,9 @@ import java.util.List;
  * @author Alan Gutierrez
  */
 public class Exit {
+    /** The linked list of all exit statuses. */
+    public final LinkedList<Exit> exits;
+    
     /** The standard output. */
     public final List<String> out;
 
@@ -23,6 +27,8 @@ public class Exit {
      * Create an exit structure with the given standard output, error output and
      * exit code.
      * 
+     * @param exits
+     *            The linked list of all exit statuses.
      * @param stdOut
      *            The standard output.
      * @param stdErr
@@ -30,7 +36,8 @@ public class Exit {
      * @param code
      *            The exit code.
      */
-    Exit(List<String> out, List<String> err, int code) {
+    Exit(LinkedList<Exit> exits, List<String> out, List<String> err, int code) {
+        this.exits = exits;
         this.out = out;
         this.err = err;
         this.code = code;

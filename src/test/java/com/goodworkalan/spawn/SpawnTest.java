@@ -8,14 +8,13 @@ import java.io.File;
 
 import org.testng.annotations.Test;
 
-// TODO Document.
+/**
+ * Unit tests for the {@link Spawn} class.
+ *
+ * @author Alan Gutierrez
+ */
 public class SpawnTest {
-    // TODO Document.
-    @Test
-    public void nothing() {
-    }
-    
-    // TODO Document.
+    /** Test a simple invocation. */
     @Test
     public void invoke() {
         Spawn spawn = new Spawn();
@@ -28,7 +27,7 @@ public class SpawnTest {
         assertEquals(exit.out.get(0), "Hello, World!");
     }
 
-    // TODO Document.
+    /** Test a number of different pipeline properties. */
     @Test
     public void cat() {
         Spawn spawn = new Spawn();
@@ -73,7 +72,7 @@ public class SpawnTest {
         
     }
     
-    // TODO Document.
+    /** Test the virtual cat. */
     @Test
     public void pseudoCat() {
         Spawn spawn = new Spawn();

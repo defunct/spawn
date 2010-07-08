@@ -1,14 +1,21 @@
 package com.goodworkalan.spawn;
 
-// TODO Document.
+/**
+ * A block of <code>Java</code> code that processes program output line by line.
+ * 
+ * @author Alan Gutierrez
+ */
 public abstract class Pipe implements CharSink {
-    // TODO Document.
+    /**
+     * The character sink, set by the <code>Executor</code> while building the
+     * virtual pipeline.
+     */
     CharSink sink;
     
-    // TODO Document.
+    /** Wrapper around a line sink. */
     private final CharSink source;
     
-    // TODO Document.
+    /** Create a virtual pipe. */
     public Pipe() {
         source = new LineSink() {
             public void send(String line, String ending) {
@@ -21,25 +28,56 @@ public abstract class Pipe implements CharSink {
         };
     }
     
-    // TODO Document.
+    /**
+     * Consume a single character of program output and forward it to the
+     * <code>in</code> method of the virtual pipe.
+     * 
+     * @param ch
+     *            The character.
+     */
     public void send(char ch) {
         source.send(ch);
     }
-    
-    // TODO Document.
+
+    /**
+     * Close the sink releasing any system resources.
+     * 
+     * @param failure
+     *            Whether the sink is being closed after a write failure.
+     */
     public void close(boolean failure) {
         source.close(failure);
     }
-    
-    // TODO Document.
+
+    /**
+     * Process the line of output and emit filtered or new output to the virtual
+     * pipeline using one of the <code>out</code> methods.
+     * 
+     * @param line
+     *            The line.
+     * @param ending
+     *            The line ending.
+     */
     public abstract void in(String line, String ending);
-    
-    // TODO Document.
+
+    /**
+     * Write a character to the virtual pipeline.
+     * 
+     * @param ch
+     *            The character.
+     */
     protected void out(char ch) {
         sink.send(ch);
     }
-    
-    // TODO Document.
+
+    /**
+     * Write the line and line ending to the virtual pipeline.
+     * 
+     * @param line
+     *            The line.
+     * @param ending
+     *            The line ending.
+     */
     protected void out(String line, String ending) {
         for (int i = 0; i < line.length(); i++) {
             sink.send(line.charAt(i));
